@@ -1,4 +1,4 @@
-name := "dl4j-spark-sbt-sample"
+name := "dl4jsparksbtexample"
 
 version := "1.0"
 

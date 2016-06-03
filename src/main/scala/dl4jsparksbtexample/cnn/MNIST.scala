@@ -1,4 +1,4 @@
-package dl4jsparksbtsample
+package dl4jsparksbtexample.cnn
 
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -15,11 +15,11 @@ import org.nd4j.linalg.dataset.DataSet
 import org.nd4j.linalg.lossfunctions.LossFunctions
 import org.slf4j.LoggerFactory
 
-object Main {
+object MNIST {
   def main(args: Array[String]) {
-    val log = LoggerFactory.getLogger(this.getClass)
+    val log = LoggerFactory.getLogger(getClass)
     val conf = new SparkConf()
-      .setAppName("Example of DL4J on Spark")
+      .setAppName("Example of DL4J on Spark(CNN-MNIST)")
       .setMaster("local[*]")
       .set(SparkDl4jMultiLayer.AVERAGE_EACH_ITERATION, String.valueOf(true))
     val sc = new SparkContext(conf)
@@ -29,7 +29,7 @@ object Main {
     val nEpoch = 10
     val nTrain = 50000
     val nTest = 10000
-    val nOut = 10
+    val nOutputs = 10
     val nSamples = nTrain + nTest
     val nCores = 8
     val batchSize = 20
@@ -101,6 +101,7 @@ object Main {
       new ConvolutionLayerSetup(builder, 28, 28, 1)
       new MultiLayerNetwork(builder.build)
     }
+
     nn.init()
     nn.setUpdater(null)
 
@@ -119,7 +120,6 @@ object Main {
 
       log.info(eval.stats)
     }
-
     log.info("finished")
   }
 }
